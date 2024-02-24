@@ -2,9 +2,11 @@ sudo: required
 services:
   - docker
 
+# Install deoendencies
 before_install:
   - docker build -t ianjyuxiao/client-test -f ./client/Dockerfile.dev ./client
 
+# Run test script
 script:
   - docker run -e CI=true ianjyuxiao/client-test npm run test
 
@@ -13,3 +15,10 @@ after_success:
   - docker build -t ianjyuxiao/nginx ./nginx
   - docker build -t ianjyuxiao/server ./server
   - docker build -t ianjyuxiao/worker ./worker
+  # Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take the images above and push them to docker hub
+  - docker push ianjyuxiao/client
+  - docker push ianjyuxiao/nginx
+  - docker push ianjyuxiao/server
+  - docker push ianjyuxiao/worker
