@@ -1,5 +1,5 @@
 {
-  "AWSEBDockerrunVersion": 2,
+  "AWSEBDockerrunVersion": 3,
   "containerDefinitions": [
     {
       "name": "client",
@@ -33,7 +33,7 @@
           "containerPort": 80
         }
       ],
-      "linsk": ["client", "server"],
+      "links": ["client", "server"],
       "memory": 128
     }
   ]
